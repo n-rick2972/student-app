@@ -1,0 +1,241 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; /* 16px * 62.5% = 10px */
+  width: 100%;
+  max-width: 100vw;
+}
+
+body {
+  width: 100%;
+  max-width: 100vw;
+  min-width: 1000px;
+  color: #4a6fc3;
+  font-family: "Roboto", "Noto Sans JP", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+header {
+  padding-top: 30px;
+}
+
+header h2 {
+  padding-bottom: 50px;
+  text-align: center;
+  font-size: 3.2rem;
+}
+
+h3 {
+  font-size: 2.4rem;
+  text-align: center;
+}
+
+h4 {
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: #4a6fc3;
+}
+
+table {
+  width: 100%;
+}
+
+table thead {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+table thead th:last-child {
+  width: 70px;
+}
+
+table tr th {
+  padding: 5px 10px;
+  border-bottom: 1px solid #dae2f4;
+}
+
+table tr td {
+  padding: 15px;
+}
+
+table tr:not(:last-child) td {
+  border-bottom: 1px solid #dae2f4;
+}
+
+label {
+  display: block;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 5px;
+  border: 1px solid #beccea;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  color: #4a6fc3;
+}
+
+input::placeholder {
+  color: #9ab1e3;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border: 1px solid #4a6fc3;
+}
+
+input[type="date"],
+input[type="datetime-local"] {
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid #beccea;
+  font-size: 1.4rem;
+  color: #496ec2;
+}
+
+input[type="date"] {
+  width: 200px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+input[type="date"]::before,
+input[type="datetime-local"]::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  width: 17px;
+  height: 17px;
+  background-color: #fff;
+  background-image: url(./Icon_calendar.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.wrapper {
+  width: 80%;
+  min-width: 950px;
+  margin: 0 auto;
+}
+
+.button-area {
+  justify-content: space-between;
+}
+
+.action-btn {
+  display: block;
+  width: 125px;
+  padding: 5px 20px;
+  margin: 0 0 0 auto;
+  border-radius: 50px;
+  border: none;
+  background-color: #9ab1e3;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.action-btn.cancel {
+  background-color: transparent;
+  border: 1px solid #9ab1e3;
+  color: #496ec2;
+  margin: 0;
+}
+
+.login-status {
+  justify-content: flex-end;
+  gap: 30px;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.login-status .action-btn {
+  margin: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-color: rgba(72, 111, 194, 0.2);
+}
+
+.toggle-btn {
+  gap: 10px;
+  width: 150px;
+  padding: 5px 20px;
+  border-radius: 50px;
+  border: 1px solid #d2dcf3;
+  background-color: transparent;
+  color: #496ec2;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.toggle-btn::before {
+  content: "";
+  display: none;
+  width: 1em;
+  height: 1em;
+  background-image: url(./icon_check.svg);
+}
+
+.toggle-btn.active {
+  background-color: #e6ecf8;
+  border: 1px solid #e6ecf8;
+}
+
+.toggle-btn.active::before {
+  display: inline-block;
+}
+
+.delete-btn {
+  display: block;
+  width: 125px;
+  padding: 5px 20px;
+  margin: 0 auto 100px;
+  border-radius: 50px;
+  border: none;
+  background-color: #e39a9a;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+}

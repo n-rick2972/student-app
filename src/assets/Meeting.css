@@ -1,0 +1,39 @@
+.meeting-detail {
+  justify-content: space-between;
+  align-items: stretch;
+  margin-bottom: 50px;
+}
+
+.meeting-overview,
+.meeting-description {
+  width: 45%;
+  min-width: 450px;
+}
+
+.label-groupe {
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.label-groupe label {
+  justify-content: flex-start;
+  width: 45%;
+}
+
+.meeting-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.meeting-description textarea {
+  flex: 1;
+}
+
+.title {
+  margin-bottom: 30px;
+}
+
+.meeting-btn {
+  margin: 0 auto;
+}

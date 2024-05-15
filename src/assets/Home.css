@@ -1,0 +1,112 @@
+/* App */
+
+/* search */
+.search {
+  width: 65%;
+  min-width: 650px;
+  background-color: #f4f6fc;
+  margin: 0 auto 80px;
+  padding: 30px 50px;
+}
+
+.search__form {
+  justify-content: space-between;
+  gap: 20px 5%;
+  margin-bottom: 50px;
+}
+
+.search__form .input-contents.text.id {
+  display: none;
+}
+
+.search__form .input-contents.text,
+.search__form .input-contents.select {
+  width: 45%;
+  margin-bottom: 0;
+}
+
+.search__form .input-contents.course {
+  width: 60%;
+  margin-bottom: 0;
+}
+
+.input-contents.check {
+  justify-content: flex-start;
+  gap: 20px;
+  flex: 1;
+  padding-top: 1.5em;
+  margin-bottom: 0;
+}
+
+.input-contents.check label {
+  width: fit-content;
+  gap: 5px;
+}
+
+.input-contents.check label input[type="checkbox"] {
+  position: relative;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  padding: 5px;
+  background-color: #fff;
+}
+
+.input-contents.check label input[type="checkbox"]:checked:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background-color: #4a6fc3;
+  border-radius: 50%;
+}
+
+.search .action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 150px;
+  margin: 0 auto;
+  border: none;
+}
+
+.search .action-btn::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url(../../public/icon_search.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.student {
+  margin-bottom: 100px;
+}
+
+.student .action-btn {
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.edit {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  background-image: url(../../public/icon_rewrite.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: middle;
+}

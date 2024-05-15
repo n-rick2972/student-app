@@ -1,0 +1,67 @@
+/* Register */
+.modal-content {
+  width: 500px;
+  padding: 40px;
+  border-radius: 5px;
+  background-color: #f4f6fc;
+}
+
+.modal-content h3 {
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #d2dcf3;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.modal-content p {
+  margin-bottom: 30px;
+}
+
+.form-area {
+  margin-bottom: 50px;
+}
+
+/* Form */
+.input-contents:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.input-contents label {
+  margin-bottom: 5px;
+}
+
+.input-contents input,
+.input-contents select {
+  width: 100%;
+}
+
+.input-contents.select {
+  justify-content: space-between;
+}
+
+.input-contents.select label {
+  width: 45%;
+}
+
+.input-contents.course {
+  width: 100%;
+}
+
+.input-contents.radio {
+  margin: 10px 0;
+}
+
+.input-contents.radio label {
+  width: 33%;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.input-contents.radio input[type="radio"] {
+  width: fit-content;
+  margin: 0 10px 0 0;
+  padding: 0;
+  vertical-align: middle;
+}
