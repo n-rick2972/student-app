@@ -8,8 +8,12 @@ const Header = () => {
   const navigate = useNavigate();
 
   const logout = async () => {
-    await signOut(auth);
-    navigate("/login");
+    const confirmed = window.confirm("本当にログアウトしますか？");
+
+    if (confirmed) {
+      await signOut(auth);
+      navigate("/login");
+    }
   };
 
   const rewriteUserName = (value: string | null) => {
