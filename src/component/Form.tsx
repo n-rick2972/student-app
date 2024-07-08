@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  doc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore";
 import { db } from "../Firebase";
 
 type formType = {
@@ -28,6 +35,19 @@ type DefaultRanges = {
   [key: string]: Range[];
 };
 
+const fetchDefaults = async () => {
+  const defaultRangesRef = doc(db, "tasks", "defaultRanges");
+  const defaultTasksRef = doc(db, "tasks", "defaultTasks");
+
+  const rangesSnapshot = await getDoc(defaultRangesRef);
+  const tasksSnapshot = await getDoc(defaultTasksRef);
+
+  const rangesData = rangesSnapshot.exists() ? rangesSnapshot.data() : {};
+  const tasksData = tasksSnapshot.exists() ? tasksSnapshot.data() : {};
+
+  return { rangesData, tasksData };
+};
+
 const Form = ({
   isSetInputData,
   isSearchInputData,
@@ -44,90 +64,18 @@ const Form = ({
       years.push(i);
     }
   }
+  const [defaultRanges, setDefaultRanges] = useState<DefaultRanges>({});
+  const [defaultTasks, setDefaultTasks] = useState<DefaultTasks>({});
 
-  const defaultRanges: DefaultRanges = {
-    default: [
-      { name: "Progress", range: 0 },
-      { name: "基礎知識", range: 0 },
-      { name: "グラフィック", range: 0 },
-      { name: "コーディング", range: 0 },
-    ],
-    web1: [
-      { name: "Progress", range: 0 },
-      { name: "基礎知識", range: 0 },
-      { name: "グラフィック", range: 0 },
-      { name: "コーディング", range: 0 },
-    ],
-    web2: [
-      { name: "Progress", range: 0 },
-      { name: "基礎知識", range: 0 },
-      { name: "グラフィック", range: 0 },
-      { name: "コーディング", range: 0 },
-      { name: "WordPress", range: 0 },
-    ],
-    web3: [
-      { name: "Progress", range: 0 },
-      { name: "基礎知識", range: 0 },
-      { name: "グラフィック", range: 0 },
-      { name: "コーディング", range: 0 },
-    ],
-    web4: [
-      { name: "Progress", range: 0 },
-      { name: "基礎知識", range: 0 },
-      { name: "グラフィック", range: 0 },
-      { name: "コーディング", range: 0 },
-      { name: "WordPress", range: 0 },
-    ],
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const { rangesData, tasksData } = await fetchDefaults();
+      setDefaultRanges(rangesData);
+      setDefaultTasks(tasksData);
+    };
 
-  const defaultTasks: DefaultTasks = {
-    default: [
-      { name: "グラフィック課題①", filing: false, check: false },
-      { name: "グラフィック課題②", filing: false, check: false },
-      { name: "コーディング課題①", filing: false, check: false },
-      { name: "コーディング課題②", filing: false, check: false },
-      { name: "中間課題", filing: false, check: false },
-      { name: "卒業制作", filing: false, check: false },
-    ],
-    web1: [
-      { name: "グラフィック課題①", filing: false, check: false },
-      { name: "グラフィック課題②", filing: false, check: false },
-      { name: "コーディング課題①", filing: false, check: false },
-      { name: "コーディング課題②", filing: false, check: false },
-      { name: "中間課題", filing: false, check: false },
-      { name: "卒業制作", filing: false, check: false },
-    ],
-    web2: [
-      { name: "グラフィック課題①", filing: false, check: false },
-      { name: "グラフィック課題②", filing: false, check: false },
-      { name: "コーディング課題①", filing: false, check: false },
-      { name: "コーディング課題②", filing: false, check: false },
-      { name: "中間課題", filing: false, check: false },
-      { name: "卒業制作", filing: false, check: false },
-      { name: "WordPress化", filing: false, check: false },
-    ],
-    web3: [
-      { name: "グラフィック課題①", filing: false, check: false },
-      { name: "グラフィック課題②", filing: false, check: false },
-      { name: "コーディング課題①", filing: false, check: false },
-      { name: "コーディング課題②", filing: false, check: false },
-      { name: "中間課題", filing: false, check: false },
-      { name: "卒業制作", filing: false, check: false },
-      { name: "超実践課題①", filing: false, check: false },
-      { name: "超実践課題②", filing: false, check: false },
-    ],
-    web4: [
-      { name: "グラフィック課題①", filing: false, check: false },
-      { name: "グラフィック課題②", filing: false, check: false },
-      { name: "コーディング課題①", filing: false, check: false },
-      { name: "コーディング課題②", filing: false, check: false },
-      { name: "中間課題", filing: false, check: false },
-      { name: "卒業制作", filing: false, check: false },
-      { name: "超実践課題①", filing: false, check: false },
-      { name: "超実践課題②", filing: false, check: false },
-      { name: "WordPress化", filing: false, check: false },
-    ],
-  };
+    fetchData();
+  }, []);
 
   const [form, setForm] = useState(() => {
     if (student) {
@@ -208,14 +156,14 @@ const Form = ({
   };
 
   useEffect(() => {
-    if (student && student.course) {
+    if (student && student.course && defaultTasks && defaultRanges) {
       setForm((prevForm) => ({
         ...prevForm,
         task: defaultTasks[student.course],
         rangeValues: defaultRanges[student.course],
       }));
     }
-  }, [student?.course]);
+  }, [student?.course, defaultTasks, defaultRanges]);
 
   return (
     <>
@@ -287,6 +235,8 @@ const Form = ({
             <option value="web2">Webデザイナー専攻+WordPress講座</option>
             <option value="web3">超実践コース</option>
             <option value="web4">超実践コース+WordPress講座</option>
+            <option value="graphic">グラフィックデザイナー専攻</option>
+            <option value="movie">動画制作専攻</option>
           </select>
         </label>
       </div>
