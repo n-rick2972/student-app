@@ -125,6 +125,10 @@ const Detail = () => {
       return "超実践コース";
     } else if (value === "web4") {
       return "超実践コース+WordPress講座";
+    } else if (value === "graphic") {
+      return "グラフィックデザイナー専攻";
+    } else if (value === "movie") {
+      return "動画クリエイター専攻";
     }
   };
 
@@ -204,6 +208,20 @@ const Detail = () => {
       } catch (error) {
         console.error("Error removing document: ", error);
       }
+    }
+  };
+
+  const deleteMeetingData = (index: number) => {
+    const confirmDelete = window.confirm(
+      "このミーティングデータを削除しますか？"
+    );
+
+    if (confirmDelete) {
+      setDetail((prevDetail: any) => {
+        const newMeeting = [...prevDetail.meeting];
+        newMeeting.splice(index, 1);
+        return { ...prevDetail, meeting: newMeeting };
+      });
     }
   };
 
@@ -422,7 +440,12 @@ const Detail = () => {
                   </td>
                   <td>{meetingItem.timeStamp}</td>
                   <td>{meetingItem.charge}</td>
-                  <td></td>
+                  <td>
+                    <button
+                      className="delete"
+                      onClick={() => deleteMeetingData(index)}
+                    ></button>
+                  </td>
                 </tr>
               ))}
             </tbody>
