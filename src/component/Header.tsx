@@ -17,10 +17,10 @@ const Header = () => {
   };
 
   const rewriteUserName = (value: string | null) => {
-    if (value === "test@gmail.com") {
+    if (value === "natunatu_f0729@yahoo.co.jp") {
+      return "管理者";
+    } else if (value === "test@gmail.com") {
       return "テスト";
-    } else if (value === "test2@gmail.com") {
-      return "テスト2";
     }
     return "";
   };

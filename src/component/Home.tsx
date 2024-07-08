@@ -44,6 +44,10 @@ const Home = () => {
       return "超実践コース";
     } else if (value === "web4") {
       return "超実践コース+WordPress講座";
+    } else if (value === "graphic") {
+      return "グラフィックデザイナー専攻";
+    } else if (value === "movie") {
+      return "動画クリエイター専攻";
     }
   };
 

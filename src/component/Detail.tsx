@@ -7,6 +7,34 @@ import "../assets/Detail.css";
 import Progress from "./Progress";
 import Header from "./Header";
 
+type LabelListsType = {
+  [key: string]: string[];
+};
+
+type RangeListType = {
+  [key: string]: string[];
+};
+
+const fetchLists = async (): Promise<{
+  labelListsData: LabelListsType;
+  rangeListData: RangeListType;
+}> => {
+  const labelListsRef = doc(db, "tasks", "labelList");
+  const rangeListRef = doc(db, "tasks", "rangeList");
+
+  const labelListsSnapshot = await getDoc(labelListsRef);
+  const rangeListSnapshot = await getDoc(rangeListRef);
+
+  const labelListsData = labelListsSnapshot.exists()
+    ? (labelListsSnapshot.data() as LabelListsType)
+    : {};
+  const rangeListData = rangeListSnapshot.exists()
+    ? (rangeListSnapshot.data() as RangeListType)
+    : {};
+
+  return { labelListsData, rangeListData };
+};
+
 const Detail = () => {
   const { id } = useParams<{ id: any }>();
   const navigate = useNavigate();
@@ -25,9 +53,24 @@ const Detail = () => {
     meeting: [],
   });
 
-  const [labelList, setLabelList] = useState<any[]>([]);
-  const [rangeList, setRangeList] = useState<any[]>([]);
+  const [labelLists, setLabelLists] = useState<LabelListsType>({});
+  const [rangeList, setRangeList] = useState<RangeListType>({});
+  const [labelList, setLabelList] = useState<string[]>([]);
+  const [ranges, setRanges] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { labelListsData, rangeListData } = await fetchLists();
+      setLabelLists(labelListsData);
+      setRangeList(rangeListData);
+
+      await getDetailData();
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getDetailData = async () => {
     try {
@@ -49,50 +92,29 @@ const Detail = () => {
     }
   };
 
-  const updatedLabelList = () => {
-    let labelList: any[] = [];
+  useEffect(() => {
+    const updatedLabelList = () => {
+      if (detail.course && labelLists[detail.course]) {
+        setLabelList(labelLists[detail.course]);
+      } else {
+        setLabelList([]);
+      }
+    };
 
-    if (detail.course === "web1" || detail.course === "web3") {
-      labelList = [
-        "グラフィック",
-        "コーディング",
-        "中間課題",
-        "企画チェック",
-        "制作チェック①",
-        "制作チェック②",
-        "卒業制作",
-      ];
-    } else if (detail.course === "web2" || detail.course === "web4") {
-      labelList = [
-        "グラフィック",
-        "コーディング",
-        "中間課題",
-        "企画チェック",
-        "制作チェック①",
-        "制作チェック②",
-        "卒業制作",
-        "WordPress",
-      ];
-    }
+    updatedLabelList();
+  }, [detail.course, labelLists]);
 
-    setLabelList(labelList);
-  };
+  useEffect(() => {
+    const updatedRangeList = () => {
+      if (detail.course && rangeList[detail.course]) {
+        setRanges(rangeList[detail.course]);
+      } else {
+        setRanges([]);
+      }
+    };
 
-  const updatedRangeList = () => {
-    let rangeList = [
-      "講義パート",
-      "中間課題",
-      "卒業制作企画",
-      "卒業制作デザイン",
-      "卒業制作コーディング",
-    ];
-
-    if (detail.course === "web2" || detail.course === "web4") {
-      rangeList.push("WordPress");
-    }
-
-    setRangeList(rangeList);
-  };
+    updatedRangeList();
+  }, [detail.course, rangeList]);
 
   const rewriteCourse = (value: string) => {
     if (value === "web1") {
@@ -185,23 +207,6 @@ const Detail = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await getDetailData();
-    };
-
-    fetchData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    updatedLabelList();
-    updatedRangeList();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [detail.course]);
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -290,7 +295,7 @@ const Detail = () => {
           <div className="target-date">
             <h4>目標</h4>
             <ul className="flex target-date__list">
-              {labelList.map((label: any, index: any) => (
+              {labelList.map((label, index) => (
                 <li key={index} className="flex target-date__list-item">
                   <label htmlFor={`date${index}`}>{label}</label>
                   <input
@@ -298,9 +303,7 @@ const Detail = () => {
                     name={`date${index}`}
                     id={`date${index}`}
                     value={detail.dates[index] || ""}
-                    onChange={(e) => {
-                      handleDateChange(index, e.target.value);
-                    }}
+                    onChange={(e) => handleDateChange(index, e.target.value)}
                   />
                 </li>
               ))}
@@ -314,7 +317,7 @@ const Detail = () => {
             />
           </div>
           <ul className="flex progress-range__list">
-            {rangeList.map((label: any, index: number) => (
+            {ranges.map((label: string, index: number) => (
               <li
                 key={index}
                 className={`progress-range__list-item area${index}`}
