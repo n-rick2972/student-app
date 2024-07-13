@@ -236,7 +236,7 @@ const Form = ({
             <option value="web3">超実践コース</option>
             <option value="web4">超実践コース+WordPress講座</option>
             <option value="graphic">グラフィックデザイナー専攻</option>
-            <option value="movie">動画制作専攻</option>
+            <option value="movie">動画クリエイター専攻</option>
           </select>
         </label>
       </div>
