@@ -12,13 +12,28 @@ const Search = ({ search, setSearch, listYear }: searchType) => {
       setSearch({ ...search, [input]: e.target.checked });
     };
 
+  const student = {
+    id: "",
+    name: "",
+    year: "",
+    month: "",
+    course: "",
+    status: "",
+    target: "",
+    purpose: "",
+    dates: [],
+    rangeValues: [],
+    task: [],
+    meeting: [],
+  };
+
   return (
     <div className="flex search__form">
       <Form
         isSearchInputData={setSearch}
         listYear={listYear}
         isSetInputData={undefined}
-        student={undefined}
+        student={student}
         isEdit={undefined}
       />
       <div className="flex input-contents check">
